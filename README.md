@@ -38,7 +38,7 @@ Swift 5 \
 Deployment Target 14.1
 
 ## Some useful OAuth2 links
-https://en.wikipedia.org/wiki/OAuth
-https://oauth.net/2/
-https://aaronparecki.com/oauth-2-simplified/
+https://en.wikipedia.org/wiki/OAuth \
+https://oauth.net/2/ \
+https://aaronparecki.com/oauth-2-simplified/ \
 https://tools.ietf.org/html/rfc6749
