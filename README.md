@@ -9,7 +9,7 @@ Apply for a new Twitter developer account here: https://developer.twitter.com an
 var clientCredentials: OAuth2ClientCredentials
 {
 	return  OAuth2ClientCredentials(apiKey: "<paste api key here>",
-									apiSecretKey: "<paste api secret key here>")
+					apiSecretKey: "<paste api secret key here>")
 }
 ```
 > Switch the comments for the two legged example in PJCOAuth2ViewController.swift
@@ -18,7 +18,7 @@ var clientCredentials: OAuth2ClientCredentials
 self.twoLeggedExample()
 ```
 ## Three legged example using Google 
-Currently this is a half working WIP,  receive a 400 response when attempting to exchange a user consented authorization code. Credentials client secret is not available for iOS.
+Currently this is a half working WIP,  receive a 400 response when attempting to exchange a user consented authorization code. On the developer console ther is no credentials client secret available for iOS.
 
 The example will progress no further than this guide step: \
 https://developers.google.com/identity/protocols/oauth2/native-app#exchange-authorization-code
@@ -27,7 +27,7 @@ https://developers.google.com/identity/protocols/oauth2/native-app#exchange-auth
 var  authorizationCredentials: OAuth2AuthorizationCredentials
 {
 	return  OAuth2AuthorizationCredentials("<paste client id here>",
-										   redirectUri: "<paste redirect uri here>")
+						redirectUri: "<paste redirect uri here>")
 }
 ```
 > **IMPORTANT**
