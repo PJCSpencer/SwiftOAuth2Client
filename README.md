@@ -30,7 +30,7 @@ var  authorizationCredentials: OAuth2AuthorizationCredentials
 					   redirectUri: "<paste redirect uri here>")
 }
 ```
-> **IMPORTANT**
+> **IMPORTANT:**
 Copy & paste the **redirect_uri** credential into Info.plist -> URL types -> URL Schemes -> Item 0
 ## Project Information
 Xcode 12.1 \
