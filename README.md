@@ -8,8 +8,8 @@ Apply for a new Twitter developer account here: https://developer.twitter.com an
 ```swift
 var clientCredentials: OAuth2ClientCredentials
 {
-	return  OAuth2ClientCredentials(apiKey: "<paste api key here>",
-					apiSecretKey: "<paste api secret key here>")
+    return  OAuth2ClientCredentials(apiKey: "<paste api key here>",
+				    apiSecretKey: "<paste api secret key here>")
 }
 ```
 > Switch the comments for the two legged example in PJCOAuth2ViewController.swift
@@ -26,8 +26,8 @@ https://developers.google.com/identity/protocols/oauth2/native-app#exchange-auth
 ```swift
 var  authorizationCredentials: OAuth2AuthorizationCredentials
 {
-	return  OAuth2AuthorizationCredentials("<paste client id here>",
-						redirectUri: "<paste redirect uri here>")
+    return  OAuth2AuthorizationCredentials("<paste client id here>",
+					   redirectUri: "<paste redirect uri here>")
 }
 ```
 > **IMPORTANT**
