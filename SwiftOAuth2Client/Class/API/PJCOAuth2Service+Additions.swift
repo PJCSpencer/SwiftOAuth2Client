@@ -12,10 +12,10 @@ enum OAuth2GrantType
 {
     case authorizationCode(OAuth2AuthorizationParameters)
     case PKCE
-    case implicit                                               // No one should any longer use the implicit grant!
-    case password                                               // Not recommended at all anymore.
-    case clientCredentials(credentials: OAuth2ClientCredentials)
-    case refreshToken
+    case implicit                                           // No one should any longer use the implicit grant!
+    case password                                           // Not recommended at all anymore.
+    case clientCredentials(OAuth2ClientCredentials)
+    case refreshToken(OAuth2RefreshParameters)
     
     
     // MARK: - Getting the Associated Value
@@ -28,6 +28,8 @@ enum OAuth2GrantType
           return response as? T
         case .clientCredentials(let credentials):
             return credentials as? T
+        case .refreshToken(let parameters):
+            return parameters as? T
         default:
           return nil
         }
@@ -70,24 +72,23 @@ extension OAuth2GrantType: PJCURLRequestHeaderProvider
 {
     var headers: PJCURLRequestHeaders
     {
+        var authorization: PJCURLRequestAuthorization? = nil
+        
         switch self
         {
-        case .authorizationCode:
-            return PJCURLRequestHeaders(self.content)
-            
         case .clientCredentials(let credentials):
             
-            guard let token = credentials.body?.base64EncodedString() else
-            { return PJCURLRequestHeaders() }
-            
-            let authorization = PJCURLRequestAuthorization(scheme: .basic,
+            if let token = credentials.body?.base64EncodedString()
+            {
+                authorization = PJCURLRequestAuthorization(scheme: .basic,
                                                            token: token)
-            return PJCURLRequestHeaders(self.content,
-                                        authorization: authorization)
+            }
             
-        default:
-            return PJCURLRequestHeaders()
+        default: break
         }
+
+        return PJCURLRequestHeaders(self.content,
+                                    authorization: authorization)
     }
 }
 
@@ -109,10 +110,8 @@ extension OAuth2GrantType: PJCURLRequestContentBodyProvider
         
         switch self
         {
-        case .authorizationCode:
-            return components.percentEncodedQuery?
-                .replacingOccurrences(of: "+", with: "%2B")
-                .data(using: .utf8)
+        case .authorizationCode, .refreshToken:
+            return components.percentEncodedQuery?.data(using: .utf8)
             
         case .clientCredentials:
             return "\(OAuth2AuthorizationKey.grantType.rawValue)=\(self.description)".data(using: .utf8)

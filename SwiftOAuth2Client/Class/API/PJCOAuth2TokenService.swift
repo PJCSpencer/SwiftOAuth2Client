@@ -55,11 +55,11 @@ extension OAuth2TokenService: OAuth2TokenServiceDelegate
             return
         }
         
-        let parameters = PJCURLRequestParameters(.post,
-                                                 headers: grant.headers)
-        
         let apiRequest = PJCAPIRequest(host,
                                        path: host.oauth2Path.token)
+        
+        let parameters = PJCURLRequestParameters(.post,
+                                                 headers: grant.headers)
         
         guard let urlRequest = apiRequest.urlRequest(parameters: parameters) else
         {

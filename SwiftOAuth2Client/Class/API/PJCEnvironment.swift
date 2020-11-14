@@ -37,15 +37,18 @@ enum PJCEnvironment
     { return .develop }
     
     
-    // MARK: - Returning the Host
+    // MARK: - Returning the Host(s)
     
-    static var host: HTTPHost
+    static var host: OAuth2Host
     {
         switch PJCEnvironment.current
         {
-        case .develop: return GoogleAccounts()
-        default: return GoogleAPI()
+        default: return SpotifyAccounts()
         }
     }
+    
+    var authHost: OAuth2Host { return PJCEnvironment.host }
+    
+    var tokenHost: OAuth2Host? { return nil }
 }
 

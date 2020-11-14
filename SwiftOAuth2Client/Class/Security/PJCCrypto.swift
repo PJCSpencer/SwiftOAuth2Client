@@ -25,10 +25,17 @@ struct PJCCodeVerifier
     
     init?()
     {
-        guard let result = String.randomHighEntropyCryptographic(in: 43..<128).urlEncodedSHA256() else
+        var sequence = [UInt8](repeating: 0,
+                               count: 32)
+        
+        guard SecRandomCopyBytes(kSecRandomDefault,
+                                 sequence.count,
+                                 &sequence) == errSecSuccess else
         { return nil }
-          
-        self.percentEncodedValue = result
+        
+        self.percentEncodedValue = Data(sequence)
+            .base64EncodedString()
+            .base64URLEncodedString()
     }
 }
 
@@ -37,8 +44,11 @@ extension PJCCodeVerifier: PJCQueryProvider
     var queryItems: [URLQueryItem]
     {
         var buffer: [URLQueryItem] = []
-        buffer.append(URLQueryItem(name: OAuth2Key.codeChallenge.rawValue, value: self.percentEncodedValue))
-        buffer.append(URLQueryItem(name: OAuth2Key.codeChallengeMethod.rawValue, value: PJCCryptoKey.s256.rawValue))
+        buffer.append(URLQueryItem(name: OAuth2Key.codeChallenge.rawValue,
+                                   value: self.percentEncodedValue.urlEncodedSHA256()))
+        
+        buffer.append(URLQueryItem(name: OAuth2Key.codeChallengeMethod.rawValue,
+                                   value: PJCCryptoKey.s256.rawValue))
         
         return buffer
     }
@@ -55,25 +65,23 @@ extension SHA256Digest
 
 extension String
 {
-    func toBase64URLEncoded() -> String
-    {
-        let base64 = Data(self.utf8).base64EncodedString()
- 
-        return base64.replacingOccurrences(of: "+", with: "-")
-            .replacingOccurrences(of: "/", with: "_")
-            .replacingOccurrences(of: "=", with: "")
-    }
-    
     func urlEncodedSHA256() -> String?
-    { return self.sha256()?.toBase64URLEncoded() }
+    { return self.sha256()?.base64URLEncodedString() }
     
-    func sha256(encoding: String.Encoding = .ascii) -> String?
+    func sha256(encoding: String.Encoding = .utf8) -> String?
     {
         guard let data = self.data(using: encoding) else
         { return nil }
         
-        let result = SHA256.hash(data: data).data
-        return String(decoding: result, as:  UTF8.self )
+        return SHA256.hash(data: data).data.base64EncodedString()
+    }
+    
+    func base64URLEncodedString() -> String
+    {
+        return self.replacingOccurrences(of: "+", with: "-")
+            .replacingOccurrences(of: "/", with: "_")
+            .replacingOccurrences(of: "=", with: "")
+            .trimmingCharacters(in: .whitespaces)
     }
 }
 

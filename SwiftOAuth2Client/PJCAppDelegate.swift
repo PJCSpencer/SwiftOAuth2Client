@@ -43,21 +43,22 @@ extension UIApplication
 
 extension UIApplication
 {
-    var clientCredentials: OAuth2ClientCredentials /* Twiiter */
+    var clientCredentials: OAuth2ClientCredentials
     {
         return OAuth2ClientCredentials(apiKey: "<paste api key here>",
                                        apiSecretKey: "<paste api secret key here>")
     }
     
-    var authorizationCredentials: OAuth2AuthorizationCredentials /* Google APIs */
+    var authorizationCredentials: OAuth2AuthorizationCredentials
     {
         return OAuth2AuthorizationCredentials("<paste client id here>",
+                                              clientSecret: "<paste optional client secret here>",
                                               redirectUri: "<paste redirect uri here>")
     }
     
     var scopes: [String]
     {
-        return ["https://www.googleapis.com/auth/gmail.labels"]
+        return ["<add scope(s) here>"]
     }
 }
 

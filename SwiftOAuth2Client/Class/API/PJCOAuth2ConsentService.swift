@@ -85,7 +85,7 @@ extension OAuth2ConsentService: OAuth2ConsentServiceDelegate
         }
         
         let authorization = OAuth2AuthorizationParameters(self.parameters.credentials,
-                                                          verifier: self.parameters.codeVerifier,
+                                                          verifier: self.parameters.verifier,
                                                           consent: consent)
         
         self.completionHandler(.success(.authorizationCode(authorization)))

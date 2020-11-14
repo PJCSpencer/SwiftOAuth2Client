@@ -61,7 +61,8 @@ enum OAuth2AuthorizationKey: String
 {
     case clientId       = "client_id"
     case clientSecret   = "client_secret"
-    case code           = "code"
+    case code
+    case state
     case codeVerifier   = "code_verifier"
     case grantType      = "grant_type"
     case redirectUri    = "redirect_uri"
@@ -76,7 +77,17 @@ enum OAuth2TokenType: String, Codable
         case bearer = "Bearer"
     }
     
+    case unkown
     case bearer
+    
+    
+    // MARK: - Decodable Initialisation
+    
+    init(from decoder: Decoder) throws
+    {
+        let container = try decoder.singleValueContainer().decode(String.self)
+        self = OAuth2TokenType(rawValue: container) ?? .unkown
+    }
 }
 
 struct OAuth2ClientCredentials
@@ -152,6 +163,4 @@ extension OAuth2AuthorizationCredentials: PJCQueryProvider
         return buffer
     }
 }
-
-class OAuth2 {}
 

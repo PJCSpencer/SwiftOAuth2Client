@@ -76,6 +76,34 @@ extension OAuth2AuthorizationCode: PJCQueryProvider
     }
 }
 
+struct OAuth2AuthorizationState
+{
+    // MARK: - Property(s)
+    
+    let value: String
+    
+    
+    // MARK: - Initialisation
+    
+    init?(url: URL?)
+    {
+        guard let url = url,
+              let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+              let items = components.queryItems?.filter({ $0.name == OAuth2AuthorizationKey.state.rawValue }),
+              let value = items.first?.value else
+        { return nil }
+        
+        self.value = value
+    }
+}
+
+extension OAuth2AuthorizationState: Equatable
+{
+    static func == (lhs: OAuth2AuthorizationState,
+                    rhs: OAuth2AuthorizationState) -> Bool
+    { return lhs.value == rhs.value }
+}
+
 struct OAuth2TokenResponse: Codable
 {
     // MARK: - Constant(s)
@@ -84,7 +112,6 @@ struct OAuth2TokenResponse: Codable
     {
         case accessToken    = "access_token"
         case expiresIn      = "expires_in"
-        case idToken        = "id_token"
         case refreshToken   = "refresh_token"
         case scope
         case tokenType      = "token_type"
@@ -99,10 +126,38 @@ struct OAuth2TokenResponse: Codable
     
     let expiresIn: Int?
     
-    let idToken: String? // GoogleAPIs.
-    
     let refreshToken: String?
     
     let scope: String?
+}
+
+extension OAuth2TokenResponse: PJCQueryProvider
+{
+    var queryItems: [URLQueryItem]
+    {
+        var buffer: [URLQueryItem] = []
+        buffer.append(URLQueryItem(name: Self.CodingKeys.refreshToken.rawValue,
+                                   value: self.refreshToken))
+        
+        return buffer
+    }
+}
+
+struct OAuth2RefreshParameters
+{
+    let credentials: OAuth2AuthorizationCredentials
+    
+    let response: OAuth2TokenResponse
+}
+
+extension OAuth2RefreshParameters: PJCQueryProvider
+{
+    var queryItems: [URLQueryItem]
+    {
+        var buffer = self.response.queryItems
+        buffer += self.credentials.queryItems.filter({ $0.name != OAuth2Key.redirectUri.rawValue })
+        
+        return buffer
+    }
 }
 

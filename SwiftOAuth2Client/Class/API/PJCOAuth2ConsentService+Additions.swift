@@ -18,7 +18,7 @@ struct OAuth2ConsentParameters
     
     let scopes: String // TODO:Support tiny domain type ...
     
-    let codeVerifier: PJCCodeVerifier
+    let verifier: PJCCodeVerifier
     
     let state: String? = nil
     
@@ -26,11 +26,11 @@ struct OAuth2ConsentParameters
     // MARK: - Initailisation
     
     init(_ credentials: OAuth2AuthorizationCredentials,
-         codeVerifier: PJCCodeVerifier? = nil,
+         verifier: PJCCodeVerifier,
          scopes: [String])
     {
         self.credentials = credentials
-        self.codeVerifier = codeVerifier ?? PJCCodeVerifier()! // TODO:Resolve force unwrap ...
+        self.verifier = verifier
         self.scopes = String(scopes.map({ $0 + " " }).reduce("", +).dropLast())
     }
 }
@@ -43,7 +43,7 @@ extension OAuth2ConsentParameters: PJCQueryProvider
         buffer.append(URLQueryItem(name: OAuth2Key.responseType.rawValue, value: self.responseType))
         buffer.append(URLQueryItem(name: OAuth2Key.scope.rawValue, value: self.scopes))
         
-        return self.credentials.queryItems + self.codeVerifier.queryItems + buffer
+        return self.credentials.queryItems + self.verifier.queryItems + buffer
     }
 }
 
@@ -53,7 +53,7 @@ struct OAuth2AuthorizationConsent
     
     let code: OAuth2AuthorizationCode
     
-    let state: String? = nil // Unsupported.
+    let state: OAuth2AuthorizationState?
     
     
     // MARK: - Initialisation
@@ -64,6 +64,7 @@ struct OAuth2AuthorizationConsent
         { return nil }
          
         self.code = code
+        self.state = OAuth2AuthorizationState(url: url)
     }
 }
 

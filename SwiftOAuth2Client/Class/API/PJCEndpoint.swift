@@ -42,3 +42,16 @@ extension TwitterOAuth2: OAuth2PathProvider, OAuth2BasePath
     var token: String { return "/oauth2/token" }
 }
 
+// MARK: - Spotify
+struct SpotifyAccounts: HTTPHost
+{ var name: String { return "accounts.spotify.com" }}
+
+extension SpotifyAccounts: OAuth2PathProvider, OAuth2BasePath
+{
+    var oauth2Path: OAuth2BasePath { return self }
+    
+    var auth: String { return "/authorize" }
+    
+    var token: String { return "/api/token" }
+}
+

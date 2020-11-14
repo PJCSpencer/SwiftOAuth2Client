@@ -38,11 +38,11 @@ struct PJCAPIRequest
     
     // MARK: - Initialisation
     
-    init(_ host: HTTPHost = PJCEnvironment.host,
+    init(_ host: HTTPHost? = nil,
          path: String,
          queryItems: [URLQueryItem]? = nil)
     {
-        self.host = host
+        self.host = host ?? PJCEnvironment.host
         self.path = path
         self.queryItems = queryItems ?? []
     }
@@ -68,11 +68,11 @@ struct PJCGenericAPIRequest<T: PJCAPIPathComponent>
     
     // MARK: - Initialisation
     
-    init(_ host: HTTPHost = PJCEnvironment.host,
+    init(_ host: HTTPHost? = nil,
          type: T.Type,
          queryItems: [URLQueryItem] = [])
     {
-        self.host = host
+        self.host = host ?? PJCEnvironment.host
         self.type = type
         self.queryItems = queryItems
     }

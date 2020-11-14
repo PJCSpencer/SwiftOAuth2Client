@@ -30,13 +30,13 @@ class PJCOAuth2ViewController: UIViewController
 extension PJCOAuth2ViewController
 {
     func threeLeggedExample()
-    { self.authorizeGoogleAPIs() }
+    { self.authorize() }
     
     func twoLeggedExample()
     {
         let credentials = UIApplication.shared.clientCredentials
-        self.exchange(grant: .clientCredentials(credentials: credentials),
-                      with: TwitterOAuth2())
+        self.exchange(grant: .clientCredentials(credentials),
+                      with: PJCEnvironment.current.authHost)
     }
 }
 
@@ -44,14 +44,18 @@ extension PJCOAuth2ViewController
 {
     // MARK: - Authorizing
     
-    func authorizeGoogleAPIs()
+    func authorize()
     {
+        guard let verifier = PJCCodeVerifier() else
+        { return }
+        
         let credentials = UIApplication.shared.authorizationCredentials
         let scopes = UIApplication.shared.scopes
         let parameters = OAuth2ConsentParameters(credentials,
+                                                 verifier: verifier,
                                                  scopes: scopes)
         
-        OAuth2ConsentService.shared.host = GoogleAccounts()
+        OAuth2ConsentService.shared.host = PJCEnvironment.current.authHost
         OAuth2ConsentService.shared.authorize(parameters: parameters,
                                               completion: self.exchange)
     }
@@ -64,23 +68,39 @@ extension PJCOAuth2ViewController
         guard let grant: OAuth2GrantType = try? result.get() else
         { return }
         
+        let host = PJCEnvironment.current.tokenHost ?? PJCEnvironment.current.authHost
         self.exchange(grant: grant,
-                      with: GoogleOAuth2())
+                      with: host)
     }
     
     func exchange(grant: OAuth2GrantType,
                   with host: OAuth2Host)
     {
         OAuth2TokenService.shared.host = host
-        OAuth2TokenService.shared.exchange(grant: grant,
-                                           completion: self.log)
+        OAuth2TokenService.shared.exchange(grant: grant)
+        { (result) in self.log(result, with: host) }
     }
     
-    func log(_ result: Result<OAuth2TokenResponse, Error>)
+    func log(_ result: Result<OAuth2TokenResponse, Error>,
+             with host: OAuth2Host)
     {
         switch result
         {
-        case .success(let response): print("Access token: \(response.accessToken)")
+        case .success(let response):
+            print("Access token: \(response.accessToken)")
+            
+            if response.refreshToken != nil
+            {
+                print("\nAttempting to exchange refresh token")
+                
+                let credentials = UIApplication.shared.authorizationCredentials
+                let parameters = OAuth2RefreshParameters(credentials: credentials,
+                                                         response: response)
+                
+                self.exchange(grant: .refreshToken(parameters),
+                              with: host)
+            }
+            
         case .failure(let error): print("There was a error: \(error)")
         }
     }
