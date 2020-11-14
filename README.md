@@ -16,7 +16,7 @@ var clientCredentials: OAuth2ClientCredentials
 ```swift
 var scopes: [String]
 {
-	return ["<add scope(s) here>"]
+    return ["<add scope(s) here>"]
 }
 ```
 > Switch the comments for the two legged example in PJCOAuth2ViewController.swift
@@ -41,17 +41,17 @@ var authorizationCredentials: OAuth2AuthorizationCredentials
 ```swift
 var scopes: [String]
 {
-	return ["<add scope(s) here>"]
+    return ["<add scope(s) here>"]
 }
 ```
 > Edit the example hosts found in PJCEnvironment.swift.
 ```swift
-static var  host: OAuth2Host
+static var host: OAuth2Host
 {
-	switch  PJCEnvironment.current
-	{
-	default: return  GoogleAccounts()
-	}
+    switch  PJCEnvironment.current
+    {
+    default: return  GoogleAccounts()
+    }
 }
 
 var authHost: OAuth2Host { return PJCEnvironment.host }
