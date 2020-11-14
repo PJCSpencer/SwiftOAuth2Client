@@ -12,25 +12,57 @@ var clientCredentials: OAuth2ClientCredentials
 				    apiSecretKey: "<paste api secret key here>")
 }
 ```
+> Add the desired scopes.
+```swift
+var scopes: [String]
+{
+	return ["<add scope(s) here>"]
+}
+```
 > Switch the comments for the two legged example in PJCOAuth2ViewController.swift
 ```swift		   
 // self.threeLeggedExample()
 self.twoLeggedExample()
 ```
 ## Three legged example using Google 
-Currently this is a half working WIP,  receive a 400 response when attempting to exchange a user consented authorization code. On the developer console ther is no credentials client secret available for iOS.
+Here's the guide: \
+https://developers.google.com/identity/protocols/oauth2/native-app#ios
 
-The example will progress no further than this guide step: \
-https://developers.google.com/identity/protocols/oauth2/native-app#exchange-authorization-code
-> Copy & paste GoogleAPIs cedentials into OAuth2AuthorizationCredentials.
+:warning: Copy & paste the  ``redirect_uri`` project credential into ``Info.plist -> URL types -> URL Schemes -> Item 0``
+> Copy & paste GoogleAPIs cedentials into OAuth2AuthorizationCredentials which can be found in PJCAppDelegate.swift.
 ```swift
-var  authorizationCredentials: OAuth2AuthorizationCredentials
+var authorizationCredentials: OAuth2AuthorizationCredentials
 {
     return  OAuth2AuthorizationCredentials("<paste client id here>",
 					   redirectUri: "<paste redirect uri here>")
 }
 ```
- :warning: **IMPORTANT:** Copy & paste the ``redirect_uri`` credential into ``Info.plist -> URL types -> URL Schemes -> Item 0``
+> Add the desired scopes. APIs/services will need to be enabled for the project using the GoogleAPIs console dashboard.
+```swift
+var scopes: [String]
+{
+	return ["<add scope(s) here>"]
+}
+```
+> Edit the example hosts found in PJCEnvironment.swift.
+```swift
+static var  host: OAuth2Host
+{
+	switch  PJCEnvironment.current
+	{
+	default: return  GoogleAccounts()
+	}
+}
+
+var authHost: OAuth2Host { return PJCEnvironment.host }
+
+var tokenHost: OAuth2Host? { return GoogleOAuth2() }
+```
+> Switch the comments for the three legged example in PJCOAuth2ViewController.swift
+```swift		   
+self.threeLeggedExample()
+// self.twoLeggedExample()
+```
 ## Project Information
 Xcode 12.1 \
 Swift 5 \
@@ -38,6 +70,6 @@ Deployment Target 14.1
 
 ## Some useful OAuth2 links
 https://en.wikipedia.org/wiki/OAuth \
-https://oauth.net/2/ \
-https://aaronparecki.com/oauth-2-simplified/ \
+https://oauth.net/2 \
+https://aaronparecki.com/oauth-2-simplified \
 https://tools.ietf.org/html/rfc6749
