@@ -28,7 +28,7 @@ self.twoLeggedExample()
 Here's the guide: \
 https://developers.google.com/identity/protocols/oauth2/native-app#ios
 
-:warning: Copy & paste the  ``redirect_uri`` project credential into ``Info.plist -> URL types -> URL Schemes -> Item 0``
+:warning: Copy & paste ``redirect_uri`` project credential into ``Info.plist -> URL types -> URL Schemes -> Item 0``
 > Copy & paste GoogleAPIs cedentials into OAuth2AuthorizationCredentials which can be found in PJCAppDelegate.swift.
 ```swift
 var authorizationCredentials: OAuth2AuthorizationCredentials
