@@ -69,7 +69,7 @@ https://developer.spotify.com/documentation/general/guides/authorization-guide
 
 Generally follow the steps for the three legged Google example with the folowing changes:
 * Invent a scheme to use for both ```redirect_uri``` and ``Info.plist -> URL types -> URL Schemes -> Item 0``
-* Add the optional authorizationCredentials -> client_secret credential, auto complete should help out
+* Add the optional authorizationCredentials -> client_secret credential
 * Return SpotifyAccounts for the environment host, return nil for tokenHost
 ## Project Information
 Xcode 12.1 \
