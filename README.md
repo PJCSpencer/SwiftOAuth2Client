@@ -23,9 +23,9 @@ var scopes: [String]
 ```swift
 static var host: OAuth2Host
 {
-    switch  PJCEnvironment.current
+    switch PJCEnvironment.current
     {
-    default: return  SpotifyAccounts()
+    default: return TwitterOAuth2()
     }
 }
 
@@ -47,8 +47,8 @@ https://developers.google.com/identity/protocols/oauth2/native-app#ios
 ```swift
 var authorizationCredentials: OAuth2AuthorizationCredentials
 {
-    return  OAuth2AuthorizationCredentials("<paste client id here>",
-					   redirectUri: "<paste redirect uri here>")
+    return OAuth2AuthorizationCredentials("<paste client id here>",
+					  redirectUri: "<paste redirect uri here>")
 }
 ```
 > Add the desired scopes. APIs/services will need to be enabled for the project using the GoogleAPIs console dashboard.
@@ -62,9 +62,9 @@ var scopes: [String]
 ```swift
 static var host: OAuth2Host
 {
-    switch  PJCEnvironment.current
+    switch PJCEnvironment.current
     {
-    default: return  GoogleAccounts()
+    default: return GoogleAccounts()
     }
 }
 
