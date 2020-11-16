@@ -12,6 +12,20 @@ var clientCredentials: OAuth2ClientCredentials
 				    apiSecretKey: "<paste api secret key here>")
 }
 ```
+> Edit the example hosts found in PJCEnvironment.swift.
+```swift
+static var host: OAuth2Host
+{
+    switch  PJCEnvironment.current
+    {
+    default: return  SpotifyAccounts()
+    }
+}
+
+var authHost: OAuth2Host { return PJCEnvironment.host }
+
+var tokenHost: OAuth2Host? { return nil) }
+```
 > Add the desired scopes.
 ```swift
 var scopes: [String]
