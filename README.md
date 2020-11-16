@@ -12,6 +12,13 @@ var clientCredentials: OAuth2ClientCredentials
 				    apiSecretKey: "<paste api secret key here>")
 }
 ```
+> Add the desired scopes.
+```swift
+var scopes: [String]
+{
+    return ["<add scope(s) here>"]
+}
+```
 > Edit the example hosts found in PJCEnvironment.swift.
 ```swift
 static var host: OAuth2Host
@@ -25,13 +32,6 @@ static var host: OAuth2Host
 var authHost: OAuth2Host { return PJCEnvironment.host }
 
 var tokenHost: OAuth2Host? { return nil) }
-```
-> Add the desired scopes.
-```swift
-var scopes: [String]
-{
-    return ["<add scope(s) here>"]
-}
 ```
 > Switch the comments for the two legged example in PJCOAuth2ViewController.swift
 ```swift		   
