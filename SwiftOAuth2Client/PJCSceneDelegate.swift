@@ -24,9 +24,16 @@ class PJCSceneDelegate: UIResponder, UIWindowSceneDelegate
         guard let windowScene = (scene as? UIWindowScene) else
         { return }
 
+        OAuth2ConsentService.shared.host = PJCEnvironment.current.authHost
+        OAuth2TokenService.shared.host = PJCEnvironment.current.tokenHost ?? PJCEnvironment.current.authHost
+        
+        let controller = PJCOAuth2ViewController()
+        controller.consentService = OAuth2ConsentService.shared
+        controller.tokenService = OAuth2TokenService.shared
+        
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.windowScene = windowScene
-        self.window?.rootViewController = PJCOAuth2ViewController()
+        self.window?.rootViewController = controller
         self.window?.makeKeyAndVisible()
     }
 }

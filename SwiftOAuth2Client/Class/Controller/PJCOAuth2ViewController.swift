@@ -10,6 +10,13 @@ import UIKit
 
 class PJCOAuth2ViewController: UIViewController
 {
+    // MARK: - Property(s)
+    
+    var consentService: OAuth2ConsentServiceDelegate?
+    
+    var tokenService: OAuth2TokenServiceDelegate?
+    
+    
     // MARK: - Managing the View
     
     override func loadView()
@@ -35,8 +42,7 @@ extension PJCOAuth2ViewController
     func twoLeggedExample()
     {
         let credentials = UIApplication.shared.clientCredentials
-        self.exchange(grant: .clientCredentials(credentials),
-                      with: PJCEnvironment.current.authHost)
+        self.exchange(grant: .clientCredentials(credentials))
     }
 }
 
@@ -55,9 +61,8 @@ extension PJCOAuth2ViewController
                                                  verifier: verifier,
                                                  scopes: scopes)
         
-        OAuth2ConsentService.shared.host = PJCEnvironment.current.authHost
-        OAuth2ConsentService.shared.authorize(parameters: parameters,
-                                              completion: self.exchange)
+        self.consentService?.authorize(parameters: parameters,
+                                       completion: self.exchange)
     }
     
     
@@ -68,21 +73,16 @@ extension PJCOAuth2ViewController
         guard let grant: OAuth2GrantType = try? result.get() else
         { return }
         
-        let host = PJCEnvironment.current.tokenHost ?? PJCEnvironment.current.authHost
-        self.exchange(grant: grant,
-                      with: host)
+        self.exchange(grant: grant)
     }
     
-    func exchange(grant: OAuth2GrantType,
-                  with host: OAuth2Host)
+    func exchange(grant: OAuth2GrantType)
     {
-        OAuth2TokenService.shared.host = host
-        OAuth2TokenService.shared.exchange(grant: grant)
-        { (result) in self.log(result, with: host) }
+        self.tokenService?.exchange(grant: grant)
+        { (result) in self.log(result) }
     }
     
-    func log(_ result: Result<OAuth2TokenResponse, Error>,
-             with host: OAuth2Host)
+    func log(_ result: Result<OAuth2TokenResponse, Error>)
     {
         switch result
         {
@@ -97,8 +97,7 @@ extension PJCOAuth2ViewController
                 let parameters = OAuth2RefreshParameters(credentials: credentials,
                                                          response: response)
                 
-                self.exchange(grant: .refreshToken(parameters),
-                              with: host)
+                self.exchange(grant: .refreshToken(parameters))
             }
             
         case .failure(let error): print("There was a error: \(error)")
