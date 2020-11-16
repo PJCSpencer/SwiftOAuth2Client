@@ -12,26 +12,65 @@ var clientCredentials: OAuth2ClientCredentials
 				    apiSecretKey: "<paste api secret key here>")
 }
 ```
+> Add the desired scopes.
+```swift
+var scopes: [String]
+{
+    return ["<add scope(s) here>"]
+}
+```
 > Switch the comments for the two legged example in PJCOAuth2ViewController.swift
 ```swift		   
 // self.threeLeggedExample()
 self.twoLeggedExample()
 ```
 ## Three legged example using Google 
-Currently this is a half working WIP,  receive a 400 response when attempting to exchange a user consented authorization code. On the developer console ther is no credentials client secret available for iOS.
+Here's the guide: \
+https://developers.google.com/identity/protocols/oauth2/native-app#ios
 
-The example will progress no further than this guide step: \
-https://developers.google.com/identity/protocols/oauth2/native-app#exchange-authorization-code
-> Copy & paste GoogleAPIs cedentials into OAuth2AuthorizationCredentials.
+:warning: Copy & paste ``redirect_uri`` project credential into ``Info.plist -> URL types -> URL Schemes -> Item 0`` making sure to remove any colon on the right side of the string
+> Copy & paste GoogleAPIs cedentials into OAuth2AuthorizationCredentials which can be found in PJCAppDelegate.swift.
 ```swift
-var  authorizationCredentials: OAuth2AuthorizationCredentials
+var authorizationCredentials: OAuth2AuthorizationCredentials
 {
     return  OAuth2AuthorizationCredentials("<paste client id here>",
 					   redirectUri: "<paste redirect uri here>")
 }
 ```
-> **IMPORTANT:**
-Copy & paste the **redirect_uri** credential into Info.plist -> URL types -> URL Schemes -> Item 0
+> Add the desired scopes. APIs/services will need to be enabled for the project using the GoogleAPIs console dashboard.
+```swift
+var scopes: [String]
+{
+    return ["<add scope(s) here>"]
+}
+```
+> Edit the example hosts found in PJCEnvironment.swift.
+```swift
+static var host: OAuth2Host
+{
+    switch  PJCEnvironment.current
+    {
+    default: return  GoogleAccounts()
+    }
+}
+
+var authHost: OAuth2Host { return PJCEnvironment.host }
+
+var tokenHost: OAuth2Host? { return GoogleOAuth2() }
+```
+> Switch the comments for the three legged example in PJCOAuth2ViewController.swift
+```swift		   
+self.threeLeggedExample()
+// self.twoLeggedExample()
+```
+## Three legged example using Spotify
+Here's the guide: \
+https://developer.spotify.com/documentation/general/guides/authorization-guide
+
+Generally follow the steps for the three legged Google example with the folowing changes:
+* Invent a scheme to use for both ```redirect_uri``` and ``Info.plist -> URL types -> URL Schemes -> Item 0``
+* Add the optional authorizationCredentials -> client_secret credential
+* Return SpotifyAccounts for the environment host, return nil for tokenHost
 ## Project Information
 Xcode 12.1 \
 Swift 5 \
@@ -39,6 +78,6 @@ Deployment Target 14.1
 
 ## Some useful OAuth2 links
 https://en.wikipedia.org/wiki/OAuth \
-https://oauth.net/2/ \
-https://aaronparecki.com/oauth-2-simplified/ \
+https://oauth.net/2 \
+https://aaronparecki.com/oauth-2-simplified \
 https://tools.ietf.org/html/rfc6749
