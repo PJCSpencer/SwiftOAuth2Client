@@ -19,6 +19,20 @@ var scopes: [String]
     return ["<add scope(s) here>"]
 }
 ```
+> Edit the example hosts found in PJCEnvironment.swift.
+```swift
+static var host: OAuth2Host
+{
+    switch PJCEnvironment.current
+    {
+    default: return TwitterOAuth2()
+    }
+}
+
+var authHost: OAuth2Host { return PJCEnvironment.host }
+
+var tokenHost: OAuth2Host? { return nil) }
+```
 > Switch the comments for the two legged example in PJCOAuth2ViewController.swift
 ```swift		   
 // self.threeLeggedExample()
@@ -33,8 +47,8 @@ https://developers.google.com/identity/protocols/oauth2/native-app#ios
 ```swift
 var authorizationCredentials: OAuth2AuthorizationCredentials
 {
-    return  OAuth2AuthorizationCredentials("<paste client id here>",
-					   redirectUri: "<paste redirect uri here>")
+    return OAuth2AuthorizationCredentials("<paste client id here>",
+					  redirectUri: "<paste redirect uri here>")
 }
 ```
 > Add the desired scopes. APIs/services will need to be enabled for the project using the GoogleAPIs console dashboard.
@@ -48,9 +62,9 @@ var scopes: [String]
 ```swift
 static var host: OAuth2Host
 {
-    switch  PJCEnvironment.current
+    switch PJCEnvironment.current
     {
-    default: return  GoogleAccounts()
+    default: return GoogleAccounts()
     }
 }
 
