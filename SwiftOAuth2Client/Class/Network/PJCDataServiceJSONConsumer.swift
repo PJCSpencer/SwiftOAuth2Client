@@ -43,23 +43,6 @@ class PJCDataServiceJSONConsumer<T:Codable> // TODO:Support aborting and returni
     { self.task = nil }
 }
 
-// MARK: - PJCResponseHandlerProvider
-extension PJCDataServiceJSONConsumer: PJCDataTaskResponseHandlerDelegate
-{
-    func responseHandler(forStatus code: Int) -> PJCDataTaskResponseHandler?
-    {
-        let table: [Int:PJCDataTaskResponseHandler] =
-        [
-            PJCDataServiceError.success.statusCode              : self.serialise,
-            PJCDataServiceError.badRequest.statusCode           : self.badRequest,
-            PJCDataServiceError.forbidden.statusCode            : self.forbidden,
-            PJCDataServiceError.unauthorized.statusCode         : self.unauthorized,
-            PJCDataServiceError.internalServerError.statusCode  : self.internalServerError,
-        ]
-        return table[code]
-    }
-}
-
 // MARK: - Resuming a Task
 extension PJCDataServiceJSONConsumer
 {
@@ -79,6 +62,23 @@ extension PJCDataServiceJSONConsumer
         
         self.resume(with: request,
                     completion: completion)
+    }
+}
+
+// MARK: - PJCResponseHandlerProvider
+extension PJCDataServiceJSONConsumer: PJCDataTaskResponseHandlerDelegate
+{
+    func responseHandler(forStatus code: Int) -> PJCDataTaskResponseHandler?
+    {
+        let table: [Int:PJCDataTaskResponseHandler] =
+        [
+            PJCDataServiceError.success.statusCode              : self.serialise,
+            PJCDataServiceError.badRequest.statusCode           : self.badRequest,
+            PJCDataServiceError.forbidden.statusCode            : self.forbidden,
+            PJCDataServiceError.unauthorized.statusCode         : self.unauthorized,
+            PJCDataServiceError.internalServerError.statusCode  : self.internalServerError,
+        ]
+        return table[code]
     }
 }
 

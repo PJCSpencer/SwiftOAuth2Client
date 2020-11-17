@@ -132,7 +132,7 @@ struct OAuth2AuthorizationCredentials
     
     let clientId: String
     
-    let clientSecret: String? // NB:This is not on the google app credentials page ..? WhhhatTF.
+    let clientSecret: String?
     
     let redirectUri: String
     
