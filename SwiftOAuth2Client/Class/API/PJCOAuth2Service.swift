@@ -84,6 +84,31 @@ enum OAuth2TokenType: String, Codable
     }
 }
 
+struct OAuth2Token: Codable
+{
+    // MARK: - Property(s)
+    
+    let type: OAuth2TokenType
+    
+    let value: String
+    
+    
+    // MARK: - Initialisation
+    
+    init(_ type: OAuth2TokenType,
+         value: String)
+    {
+        self.type = type
+        self.value = value
+    }
+}
+
+extension OAuth2Token: PJCQueryProvider
+{
+    var queryItems: [URLQueryItem]
+    { return [URLQueryItem(name: self.type.rawValue, value: self.value)] }
+}
+
 struct OAuth2ClientCredentials
 {
     // MARK: - Consumer API keys

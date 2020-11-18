@@ -19,7 +19,7 @@ protocol OAuth2ConsentServiceDelegate
                    completion: @escaping OAuth2ConsentServiceResponseHandler)
 }
 
-class OAuth2ConsentService: NSObject
+final class OAuth2ConsentService: NSObject
 {
     // MARK: - Accessing the Shared Instance
     

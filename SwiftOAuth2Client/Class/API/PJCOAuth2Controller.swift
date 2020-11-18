@@ -8,7 +8,7 @@
 import Foundation
 
 
-class PJCOAuth2Controller
+final class PJCOAuth2Controller
 {
     // MARK: - Accessing the Shared Instance
     
@@ -25,8 +25,6 @@ class PJCOAuth2Controller
     
     var completion: OAuth2TokenServiceResponseHandler?
     
-    fileprivate var credentials: OAuth2AuthorizationCredentials? // TODO:Remove ...
-    
     
     // MARK: - Initialisation
     
@@ -39,7 +37,6 @@ extension PJCOAuth2Controller
     
     func authorize(parameters: OAuth2ConsentParameters)
     {
-        self.credentials = parameters.credentials
         self.consentService.authorize(parameters: parameters,
                                       completion: self.exchange)
     }
@@ -58,43 +55,38 @@ extension PJCOAuth2Controller
     
     func exchange(grant: OAuth2GrantType)
     {
-        // TODO:Support automaticallyRefreshAccessToken ...
-        
-        self.tokenService.exchange(grant: grant,
-                                   completion: self.completion ?? self.log)
-    }
-    
-    
-    // MARK: -
-    
-    func refresh(parameters: OAuth2RefreshParameters) { /* TODO: */ }
-}
-
-extension PJCOAuth2Controller
-{
-    fileprivate func log(_ result: Result<OAuth2TokenResponse, Error>)
-    {
-        switch result
-        {
-        case .success(let response):
-            print("Access token: \(response.accessToken)")
+        self.tokenService.exchange(grant: grant)
+        { (result) in
             
-            if self.automaticallyRefreshAccessToken,
-               let credentials = self.credentials,
-               let token = response.refreshToken
+            switch result
             {
-                print("\nAttempting to exchange refresh token")
+            case .success(let response):
+                print("Access token: \(response.accessToken)")
                 
-                let parameters = OAuth2RefreshParameters(credentials,
-                                                         token: token)
+                if self.automaticallyRefreshAccessToken,
+                   let parameters: OAuth2AuthorizationParameters = grant.get(),
+                   let credentials = parameters.credentials as OAuth2AuthorizationCredentials?,
+                   let token = response.refreshToken
+                {
+                    print("\nAttempting to exchange refresh token")
+                    let parameters = OAuth2RefreshParameters(credentials,
+                                                             token: token)
+                    self.exchange(grant: .refreshToken(parameters))
+                }
+                else
+                { self.completion?(.success(response)) }
                 
-                // Avoid looping.
-                self.credentials = nil
-                self.exchange(grant: .refreshToken(parameters))
+            case .failure(let error):
+                print("There was a error: \(error)")
+                self.completion?(.failure(OAuth2Error.failed))
             }
-            
-        case .failure(let error): print("There was a error: \(error)")
         }
     }
+    
+    
+    // MARK: - Refreshing an Access Token
+    
+    func refresh(parameters: OAuth2RefreshParameters)
+    { self.exchange(grant: .refreshToken(parameters)) }
 }
 

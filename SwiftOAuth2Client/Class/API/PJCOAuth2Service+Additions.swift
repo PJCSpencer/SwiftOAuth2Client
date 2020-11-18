@@ -24,8 +24,8 @@ enum OAuth2GrantType
     {
         switch self
         {
-        case .authorizationCode(let response):
-          return response as? T
+        case .authorizationCode(let parameters):
+          return parameters as? T
         case .clientCredentials(let credentials):
             return credentials as? T
         case .refreshToken(let parameters):

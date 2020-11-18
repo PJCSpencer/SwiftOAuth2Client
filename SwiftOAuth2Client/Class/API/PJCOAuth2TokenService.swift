@@ -18,7 +18,7 @@ protocol OAuth2TokenServiceDelegate
                   completion: @escaping OAuth2TokenServiceResponseHandler)
 }
 
-class OAuth2TokenService
+final class OAuth2TokenService
 {
     // MARK: - Accessing the Shared Instance
     
