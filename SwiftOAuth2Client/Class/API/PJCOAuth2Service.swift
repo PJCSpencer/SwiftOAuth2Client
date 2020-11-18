@@ -9,7 +9,6 @@ import Foundation
 
 
 typealias OAuth2Host = HTTPHost & OAuth2PathProvider
-typealias OAuth2Token = String
 
 protocol OAuth2BasePath // TODO:Extend ...
 {
@@ -70,15 +69,10 @@ enum OAuth2AuthorizationKey: String
 
 enum OAuth2TokenType: String, Codable
 {
-    // MARK: - Constant(s)
-    
-    enum CodingKeys: String, CodingKey
-    {
-        case bearer = "Bearer"
-    }
-    
     case unkown
     case bearer
+    case access     = "access_token"
+    case refresh    = "refresh_token"
     
     
     // MARK: - Decodable Initialisation
@@ -86,7 +80,7 @@ enum OAuth2TokenType: String, Codable
     init(from decoder: Decoder) throws
     {
         let container = try decoder.singleValueContainer().decode(String.self)
-        self = OAuth2TokenType(rawValue: container) ?? .unkown
+        self = OAuth2TokenType(rawValue: container.lowercased()) ?? .unkown
     }
 }
 

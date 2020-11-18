@@ -104,6 +104,31 @@ extension OAuth2AuthorizationState: Equatable
     { return lhs.value == rhs.value }
 }
 
+struct OAuth2Token: Codable
+{
+    // MARK: - Property(s)
+    
+    let type: OAuth2TokenType
+    
+    let value: String
+    
+    
+    // MARK: - Initialisation
+    
+    init(_ type: OAuth2TokenType,
+         value: String)
+    {
+        self.type = type
+        self.value = value
+    }
+}
+
+extension OAuth2Token: PJCQueryProvider
+{
+    var queryItems: [URLQueryItem]
+    { return [URLQueryItem(name: self.type.rawValue, value: self.value)] }
+}
+
 struct OAuth2TokenResponse: Codable
 {
     // MARK: - Constant(s)
@@ -120,41 +145,69 @@ struct OAuth2TokenResponse: Codable
     
     // MARK: - Property(s)
     
-    let accessToken: String
+    let accessToken: OAuth2Token
     
     let tokenType: OAuth2TokenType
     
     let expiresIn: Int?
     
-    let refreshToken: String?
+    let refreshToken: OAuth2Token?
     
     let scope: String?
-}
-
-extension OAuth2TokenResponse: PJCQueryProvider
-{
-    var queryItems: [URLQueryItem]
+    
+    
+    // MARK: - Decodable Initialisation
+    
+    init(from decoder: Decoder) throws
     {
-        var buffer: [URLQueryItem] = []
-        buffer.append(URLQueryItem(name: Self.CodingKeys.refreshToken.rawValue,
-                                   value: self.refreshToken))
+        let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        return buffer
+        guard let accessToken = try? container.decode(String.self, forKey: Self.CodingKeys.accessToken) else
+        { throw DecodingError.dataCorruptedError(forKey: Self.CodingKeys.accessToken,
+                                                 in: container,
+                                                 debugDescription: "Failed to parse token.") }
+        
+        self.accessToken = OAuth2Token(.access,
+                                       value: accessToken)
+        
+        self.tokenType = try container.decode(OAuth2TokenType.self, forKey: Self.CodingKeys.tokenType)
+        self.expiresIn = try? container.decodeIfPresent(Int.self, forKey: Self.CodingKeys.expiresIn)
+        
+        if let refreshToken = try? container.decode(String.self, forKey: Self.CodingKeys.refreshToken)
+        {
+            self.refreshToken = OAuth2Token(.refresh,
+                                            value: refreshToken)
+        }
+        else { self.refreshToken = nil }
+        
+        self.scope = try? container.decodeIfPresent(String.self, forKey: Self.CodingKeys.scope)
     }
 }
 
 struct OAuth2RefreshParameters
 {
+    // MARK: - Property(s)
+    
     let credentials: OAuth2AuthorizationCredentials
     
-    let response: OAuth2TokenResponse
+    let token: OAuth2Token
+    
+    
+    // MARK:  - Initialisation
+    
+    init(_ credentials: OAuth2AuthorizationCredentials,
+         token: OAuth2Token)
+    {
+        self.credentials = credentials
+        self.token = token
+    }
 }
 
 extension OAuth2RefreshParameters: PJCQueryProvider
 {
     var queryItems: [URLQueryItem]
     {
-        var buffer = self.response.queryItems
+        var buffer = self.token.queryItems
         buffer += self.credentials.queryItems.filter({ $0.name != OAuth2Key.redirectUri.rawValue })
         
         return buffer
