@@ -46,6 +46,7 @@ enum PJCDataServiceError: Error
     // 400.
     case clientError
     case badRequest, unauthorized, forbidden, notFound, requestTimeout
+    case cancelled
     
     // 500.
     case serverError
@@ -56,20 +57,14 @@ enum PJCDataServiceError: Error
     {
         switch self
         {
-        case .success:
-            return 200
-        case .redirection:
-            return 300
-        case .badRequest:
-            return 400
-        case .unauthorized:
-            return 401
-        case .requestTimeout:
-            return 408
-        case .internalServerError:
-            return 500
-        default:
-            return 0
+        case .success: return 200
+        case .redirection: return 300
+        case .badRequest: return 400
+        case .unauthorized: return 401
+        case .requestTimeout: return 408
+        case .cancelled: return 499
+        case .internalServerError: return 500
+        default: return 0
         }
     }
     
@@ -77,38 +72,23 @@ enum PJCDataServiceError: Error
     {
         switch statusCode
         {
-        case 200...208:
-            return .success
-        case 300...308:
-            return .redirection
-        case 400:
-            return .badRequest
-        case 401:
-            return .unauthorized
-        case 403:
-            return .forbidden
-        case 404:
-            return .notFound
-        case 405...407:
-            return .clientError
-        case 408:
-            return .requestTimeout
-        case 409...451:
-            return .clientError
-        case 500:
-            return .internalServerError
-        case 501:
-            return .notImplemented
-        case 502:
-            return .serverError
-        case 503:
-            return .serviceUnavailable
-        case 504...511:
-            return .serverError
-        case 550:
-            return .permissionDenied
-        default:
-            return .failed
+        case 200...208: return .success
+        case 300...308: return .redirection
+        case 400: return .badRequest
+        case 401: return .unauthorized
+        case 403: return .forbidden
+        case 404: return .notFound
+        case 405...407: return .clientError
+        case 408: return .requestTimeout
+        case 409...451: return .clientError
+        case 499: return .cancelled
+        case 500: return .internalServerError
+        case 501: return .notImplemented
+        case 502: return .serverError
+        case 503: return .serviceUnavailable
+        case 504...511: return .serverError
+        case 550: return .permissionDenied
+        default: return .failed
         }
     }
 }
@@ -126,6 +106,7 @@ enum StatusCode: Int
     case unauthorized   = 401
     case forbidden      = 403
     case requestTimeout = 408
+    case cancelled      = 499
 }
 
 enum HTTPHeaderField: String

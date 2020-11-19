@@ -82,6 +82,13 @@ extension PJCDataService: PJCDataTaskProvider // TODO:Task could be baked in to 
         return self.session.dataTask(with: request)
         { (data, response, error) in
             
+            if (error as NSError?)?.code == NSURLErrorCancelled,
+               let handler = responseHandler(PJCDataServiceError.cancelled.statusCode) as PJCDataTaskResponseHandler?
+            {
+                handler(.failure(PJCDataServiceError.cancelled))
+                return
+            }
+            
             guard error == nil,
                 let response = response as? HTTPURLResponse else
             { return }
