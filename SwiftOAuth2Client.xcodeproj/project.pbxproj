@@ -10,7 +10,6 @@
 		C215D36725586CD5004F3A77 /* PJCOAuth2Service+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C215D36625586CD5004F3A77 /* PJCOAuth2Service+Additions.swift */; };
 		C215D38125598CE3004F3A77 /* PJCOAuth2ConsentService+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C215D38025598CE3004F3A77 /* PJCOAuth2ConsentService+Additions.swift */; };
 		C215D3892559A12C004F3A77 /* PJCOAuth2TokenService+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C215D3882559A12C004F3A77 /* PJCOAuth2TokenService+Additions.swift */; };
-		C222DD77256669D3004D0C30 /* PJCDataServiceConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C222DD75256669D3004D0C30 /* PJCDataServiceConsumer.swift */; };
 		C274618B2558087A00661464 /* PJCOAuth2TokenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C274618A2558087A00661464 /* PJCOAuth2TokenService.swift */; };
 		C28FB2982565376600B29927 /* PJCOAuth2Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28FB2972565376600B29927 /* PJCOAuth2Controller.swift */; };
 		C293037D254C32B900708DB3 /* PJCAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C293037C254C32B900708DB3 /* PJCAppDelegate.swift */; };
@@ -58,7 +57,6 @@
 		C215D36625586CD5004F3A77 /* PJCOAuth2Service+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PJCOAuth2Service+Additions.swift"; sourceTree = "<group>"; };
 		C215D38025598CE3004F3A77 /* PJCOAuth2ConsentService+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PJCOAuth2ConsentService+Additions.swift"; sourceTree = "<group>"; };
 		C215D3882559A12C004F3A77 /* PJCOAuth2TokenService+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PJCOAuth2TokenService+Additions.swift"; sourceTree = "<group>"; };
-		C222DD75256669D3004D0C30 /* PJCDataServiceConsumer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PJCDataServiceConsumer.swift; path = ../../../../../../../../Desktop/PJCDataServiceConsumer.swift; sourceTree = "<group>"; };
 		C274618A2558087A00661464 /* PJCOAuth2TokenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJCOAuth2TokenService.swift; sourceTree = "<group>"; };
 		C28FB2972565376600B29927 /* PJCOAuth2Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJCOAuth2Controller.swift; sourceTree = "<group>"; };
 		C2930379254C32B900708DB3 /* SwiftOAuth2Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftOAuth2Client.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -213,7 +211,6 @@
 				C29303CD254C350100708DB3 /* PJCDataService.swift */,
 				C29303CF254C350100708DB3 /* PJCDataService+Additions.swift */,
 				C29303CE254C350100708DB3 /* PJCDataServiceJSONConsumer.swift */,
-				C222DD75256669D3004D0C30 /* PJCDataServiceConsumer.swift */,
 				C2E848D025669EBC00E35CC9 /* PJCDataServiceConsumer+Additions.swift */,
 			);
 			path = Network;
@@ -374,7 +371,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C222DD77256669D3004D0C30 /* PJCDataServiceConsumer.swift in Sources */,
 				C29303DC254C353500708DB3 /* UIKit+Additions.swift in Sources */,
 				C29303D3254C350100708DB3 /* PJCDataService+Additions.swift in Sources */,
 				C215D38125598CE3004F3A77 /* PJCOAuth2ConsentService+Additions.swift in Sources */,
