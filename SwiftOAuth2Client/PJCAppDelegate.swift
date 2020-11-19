@@ -51,13 +51,13 @@ extension UIApplication
     
     var authorizationCredentials: OAuth2AuthorizationCredentials
     {
-        return OAuth2AuthorizationCredentials("1022352150242-i40f7j75nujm0ovr2hod7t9ohubjp12p.apps.googleusercontent.com",
-                                              redirectUri: "com.googleusercontent.apps.1022352150242-i40f7j75nujm0ovr2hod7t9ohubjp12p:")
+        return OAuth2AuthorizationCredentials("<paste client id here>",
+                                              redirectUri: "<paste redirect uri here>")
     }
     
     var scopes: [String]
     {
-        return ["https://www.googleapis.com/auth/gmail.labels"]
+        return []
     }
 }
 

@@ -34,6 +34,7 @@
 		C293044B254C621900708DB3 /* PJCCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C293044A254C621900708DB3 /* PJCCrypto.swift */; };
 		C2B077B02555C7DC001F5B72 /* PJCEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B077AF2555C7DC001F5B72 /* PJCEndpoint.swift */; };
 		C2E848D125669EBC00E35CC9 /* PJCDataServiceConsumer+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E848D025669EBC00E35CC9 /* PJCDataServiceConsumer+Additions.swift */; };
+		C2E848E52566AA3E00E35CC9 /* PJCDataServiceConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E848E42566AA3E00E35CC9 /* PJCDataServiceConsumer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		C293044A254C621900708DB3 /* PJCCrypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJCCrypto.swift; sourceTree = "<group>"; };
 		C2B077AF2555C7DC001F5B72 /* PJCEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJCEndpoint.swift; sourceTree = "<group>"; };
 		C2E848D025669EBC00E35CC9 /* PJCDataServiceConsumer+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PJCDataServiceConsumer+Additions.swift"; sourceTree = "<group>"; };
+		C2E848E42566AA3E00E35CC9 /* PJCDataServiceConsumer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PJCDataServiceConsumer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +213,7 @@
 				C29303CD254C350100708DB3 /* PJCDataService.swift */,
 				C29303CF254C350100708DB3 /* PJCDataService+Additions.swift */,
 				C29303CE254C350100708DB3 /* PJCDataServiceJSONConsumer.swift */,
+				C2E848E42566AA3E00E35CC9 /* PJCDataServiceConsumer.swift */,
 				C2E848D025669EBC00E35CC9 /* PJCDataServiceConsumer+Additions.swift */,
 			);
 			path = Network;
@@ -371,6 +374,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2E848E52566AA3E00E35CC9 /* PJCDataServiceConsumer.swift in Sources */,
 				C29303DC254C353500708DB3 /* UIKit+Additions.swift in Sources */,
 				C29303D3254C350100708DB3 /* PJCDataService+Additions.swift in Sources */,
 				C215D38125598CE3004F3A77 /* PJCOAuth2ConsentService+Additions.swift in Sources */,
