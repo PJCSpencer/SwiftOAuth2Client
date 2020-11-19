@@ -29,7 +29,7 @@ final class OAuth2TokenService
     
     var host: OAuth2Host?
     
-    fileprivate var consumer: PJCDataServiceConsumer
+    var consumer: PJCDataServiceConsumer
     
     
     // MARK: - Initialisation
@@ -40,7 +40,7 @@ final class OAuth2TokenService
         let session = URLSession(configuration: configuration)
         let service = PJCDataService(session: session)
         
-        self.consumer = PJCDataServiceConsumer(service)
+        self.consumer = PJCJSONConsumer(service)
     }
 }
 

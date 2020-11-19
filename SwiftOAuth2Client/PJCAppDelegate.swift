@@ -57,7 +57,7 @@ extension UIApplication
     
     var scopes: [String]
     {
-        return []
+        return ["<add scope(s) here>"]
     }
 }
 

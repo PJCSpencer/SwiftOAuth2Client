@@ -58,18 +58,17 @@ extension OAuth2ConsentService: OAuth2ConsentServiceDelegate
             return
         }
         
-        self.parameters = parameters
-        self.completionHandler = completion
-        
         let apiRequest = PJCAPIRequest(path: host.oauth2Path.auth,
-                                       queryItems: self.parameters.queryItems)
+                                       queryItems: parameters.queryItems)
         
         guard let url = apiRequest.urlRequest()?.url else
         {
-            self.completionHandler(.failure(PJCDataServiceError.badRequest))
+            completion(.failure(PJCDataServiceError.badRequest))
             return
         }
         
+        self.parameters = parameters
+        self.completionHandler = completion
         self.session = ASWebAuthenticationSession(url: url,
                                                   callbackURLScheme: parameters.credentials.redirectUri,
                                                   completionHandler: self.refresh)

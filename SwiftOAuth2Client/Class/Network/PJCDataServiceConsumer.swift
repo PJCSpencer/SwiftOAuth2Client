@@ -15,7 +15,7 @@ protocol PJCConsumerRouter
     func route(_ result: PJCDataTaskResult)
 }
 
-class PJCDataServiceConsumer
+class PJCDataServiceConsumer: PJCDataTaskResponseHandlerDelegate
 {
     // MARK: - Property(s)
     
@@ -43,36 +43,21 @@ class PJCDataServiceConsumer
     
     deinit
     { self.task = nil }
-}
-
-// MARK: - Resuming a Task
-extension PJCDataServiceConsumer
-{
+    
+    
+    // MARK: - Resuming a Task
+    
     func resume<T:Codable>(with request: URLRequest,
                            completion: @escaping PJCDataServiceConsumerHandler<T>)
     {
-        if self.routers[PJCDataServiceError.cancelled.statusCode] == nil
-        {
-            self.routers[PJCDataServiceError.success.statusCode] = PJCConsumerJSONRouter(completion)
-            self.routers[PJCDataServiceError.cancelled.statusCode] = PJCConsumerErrorRouter(completion)
-        }
-        
         self.task = self.provider.task(for: request,
                                        responseHandler: self.responseHandler)
     }
-}
-
-// MARK: - PJCResponseHandlerProvider
-extension PJCDataServiceConsumer: PJCDataTaskResponseHandlerDelegate
-{
+    
+    
+    // MARK: - PJCResponseHandlerProvider
+    
     func responseHandler(forStatus code: Int) -> PJCDataTaskResponseHandler?
-    {
-        switch code
-        {
-        case 200: return self.routers[code]?.route
-        case 400...500: return self.routers[PJCDataServiceError.cancelled.statusCode]?.route
-        default: return nil
-        }
-    }
+    { return nil }
 }
 

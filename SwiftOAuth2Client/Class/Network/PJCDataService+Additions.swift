@@ -46,6 +46,7 @@ enum PJCDataServiceError: Error
     // 400.
     case clientError
     case badRequest, unauthorized, forbidden, notFound, requestTimeout
+    case imATeapot
     case cancelled
     
     // 500.
@@ -62,6 +63,7 @@ enum PJCDataServiceError: Error
         case .badRequest: return 400
         case .unauthorized: return 401
         case .requestTimeout: return 408
+        case .imATeapot: return 418
         case .cancelled: return 499
         case .internalServerError: return 500
         default: return 0
@@ -81,6 +83,7 @@ enum PJCDataServiceError: Error
         case 405...407: return .clientError
         case 408: return .requestTimeout
         case 409...451: return .clientError
+        case 418: return .imATeapot
         case 499: return .cancelled
         case 500: return .internalServerError
         case 501: return .notImplemented
@@ -106,6 +109,7 @@ enum StatusCode: Int
     case unauthorized   = 401
     case forbidden      = 403
     case requestTimeout = 408
+    case imATeapot      = 418
     case cancelled      = 499
 }
 
