@@ -25,6 +25,12 @@ protocol PJCDataTaskResponseHandlerDelegate
     func responseHandler(forStatus code: Int) -> PJCDataTaskResponseHandler?
 }
 
+extension PJCDataTaskResponseHandlerDelegate
+{
+    func responseHandler(forStatus code: Int) -> PJCDataTaskResponseHandler?
+    { return nil }
+}
+
 extension PJCDataTaskResult where Success == PJCTaskData
 {
     func serialisedJSON<T:Codable>() -> Result<T, Error>

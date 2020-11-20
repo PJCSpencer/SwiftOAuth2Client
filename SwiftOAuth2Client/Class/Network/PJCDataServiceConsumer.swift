@@ -15,7 +15,7 @@ protocol PJCConsumerRouter
     func route(_ result: PJCDataTaskResult)
 }
 
-class PJCDataServiceConsumer: PJCDataTaskResponseHandlerDelegate
+class PJCDataServiceConsumer: PJCDataTaskResponseHandlerDelegate // NB:Protocol returns nil by default.
 {
     // MARK: - Property(s)
     
@@ -53,11 +53,5 @@ class PJCDataServiceConsumer: PJCDataTaskResponseHandlerDelegate
         self.task = self.provider.task(for: request,
                                        responseHandler: self.responseHandler)
     }
-    
-    
-    // MARK: - PJCResponseHandlerProvider
-    
-    func responseHandler(forStatus code: Int) -> PJCDataTaskResponseHandler?
-    { return nil }
 }
 

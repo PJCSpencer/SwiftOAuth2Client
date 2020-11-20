@@ -24,7 +24,8 @@ class OAuth2ConsumerRouter<T>
 extension OAuth2ConsumerRouter: PJCConsumerRouter
 {
     func route(_ result: PJCDataTaskResult)
-    {
+    { print("\(self)::\(#function)")
+        
         // TODO:
     }
 }
