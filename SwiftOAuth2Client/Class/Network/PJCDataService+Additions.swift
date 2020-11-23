@@ -8,6 +8,19 @@
 import Foundation
 
 
+protocol HTTPMethodProvider
+{
+    var method: HTTPMethod { get }
+}
+
+extension HTTPMethodProvider
+{ var method: HTTPMethod { return .get }}
+
+protocol URLBasePathProvider
+{
+    static var basePath: String { get }
+}
+
 protocol PJCURLRequestProvider
 {
     func urlRequest(parameters: PJCURLRequestParameters?) -> URLRequest?

@@ -103,6 +103,15 @@ struct OAuth2Token: Codable
     }
 }
 
+extension OAuth2Token: PJCKeychainSupporter
+{
+    func saveToKeychain() // TODO:Support protocol ...
+    {
+        PJCKeychain.write(value: self.value,
+                          forKey: OAuth2TokenType.access.rawValue)
+    }
+}
+
 extension OAuth2Token: PJCQueryProvider
 {
     var queryItems: [URLQueryItem]
@@ -181,5 +190,12 @@ extension OAuth2AuthorizationCredentials: PJCQueryProvider
         
         return buffer
     }
+}
+
+class OAuth2
+{
+    static var authenticationRoute: OAuth2Route?
+    
+    static var token: String = ""
 }
 

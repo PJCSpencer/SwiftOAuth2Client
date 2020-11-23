@@ -21,7 +21,7 @@ final class PJCOAuth2Controller
     
     var tokenService: OAuth2TokenServiceDelegate = OAuth2TokenService.shared
     
-    var automaticallyRefreshAccessToken: Bool = true
+    var automaticallyRefreshAccessToken: Bool = false
     
     var completion: OAuth2TokenServiceResponseHandler?
     
@@ -61,14 +61,14 @@ extension PJCOAuth2Controller
             switch result
             {
             case .success(let response):
-                print("Access token: \(response.accessToken)")
+                // print("Access token: \(response.accessToken)")
                 
                 if self.automaticallyRefreshAccessToken,
                    let parameters: OAuth2AuthorizationParameters = grant.get(),
                    let credentials = parameters.credentials as OAuth2AuthorizationCredentials?,
                    let token = response.refreshToken
                 {
-                    print("\nAttempting to exchange refresh token")
+                    // print("\nAttempting to exchange refresh token")
                     let parameters = OAuth2RefreshParameters(credentials,
                                                              token: token)
                     self.exchange(grant: .refreshToken(parameters))
@@ -76,8 +76,8 @@ extension PJCOAuth2Controller
                 else
                 { self.completion?(.success(response)) }
                 
-            case .failure(let error):
-                print("There was a error: \(error)")
+            case .failure(_):
+                // print("There was a error: \(error)")
                 self.completion?(.failure(OAuth2Error.failed))
             }
         }

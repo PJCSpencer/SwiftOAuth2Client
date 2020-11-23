@@ -12,6 +12,9 @@ import Foundation
 struct GoogleAPI: HTTPHost
 { var name: String { return "googleapis.com" }}
 
+struct GoogleGmail: HTTPHost
+{ var name: String { return "gmail.\(GoogleAPI().name)" }}
+
 struct GoogleAccounts: HTTPHost
 { var name: String { return "accounts.google.com" }}
 

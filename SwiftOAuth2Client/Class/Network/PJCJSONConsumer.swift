@@ -16,8 +16,8 @@ final class PJCJSONConsumer: PJCDataServiceConsumer
                                     completion: @escaping PJCDataServiceConsumerHandler<T>)
     {
         self.routers[PJCDataServiceError.success.statusCode] = PJCConsumerJSONRouter(completion)
-        self.routers[PJCDataServiceError.unauthorized.statusCode] = OAuth2ConsumerRouter(completion)
         self.routers[PJCDataServiceError.imATeapot.statusCode] = PJCConsumerErrorRouter(completion)
+        self.routers[PJCDataServiceError.unauthorized.statusCode] = OAuth2ConsumerRouter(completion: completion)
         
         super.resume(with: request,
                      completion: completion)
@@ -26,7 +26,7 @@ final class PJCJSONConsumer: PJCDataServiceConsumer
     
     // MARK: - PJCResponseHandlerProvider
     
-    func responseHandler(forStatus code: Int) -> PJCDataTaskResponseHandler?
+    override func responseHandler(forStatus code: Int) -> PJCDataTaskResponseHandler?
     {
         switch code
         {

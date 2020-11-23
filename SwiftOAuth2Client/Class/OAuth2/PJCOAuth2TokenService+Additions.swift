@@ -159,6 +159,12 @@ struct OAuth2TokenResponse: Codable
     }
 }
 
+extension OAuth2TokenResponse: PJCKeychainSupporter
+{
+    func saveToKeychain()
+    { self.accessToken.saveToKeychain() }
+}
+
 struct OAuth2RefreshParameters
 {
     // MARK: - Property(s)

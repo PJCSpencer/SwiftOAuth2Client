@@ -15,7 +15,7 @@ protocol PJCConsumerRouter
     func route(_ result: PJCDataTaskResult)
 }
 
-class PJCDataServiceConsumer: PJCDataTaskResponseHandlerDelegate // NB:Protocol returns nil by default.
+class PJCDataServiceConsumer: PJCDataTaskResponseHandlerDelegate
 {
     // MARK: - Property(s)
     
@@ -45,7 +45,7 @@ class PJCDataServiceConsumer: PJCDataTaskResponseHandlerDelegate // NB:Protocol 
     { self.task = nil }
     
     
-    // MARK: - Resuming a Task
+    // MARK: - Controlling a Task
     
     func resume<T:Codable>(with request: URLRequest,
                            completion: @escaping PJCDataServiceConsumerHandler<T>)
@@ -53,5 +53,14 @@ class PJCDataServiceConsumer: PJCDataTaskResponseHandlerDelegate // NB:Protocol 
         self.task = self.provider.task(for: request,
                                        responseHandler: self.responseHandler)
     }
+    
+    func cancel()
+    { self.task = nil }
+    
+    
+    // MARK: - PJCDataTaskResponseHandlerDelegate
+    
+    func responseHandler(forStatus code: Int) -> PJCDataTaskResponseHandler?
+    { return nil }
 }
 
