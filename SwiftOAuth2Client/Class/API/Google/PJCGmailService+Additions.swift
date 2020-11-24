@@ -76,8 +76,11 @@ extension GmailServiceRequest: PJCURLRequestHeaderProvider
 {
     var headers: PJCURLRequestHeaders
     {
+        guard let token = PJCKeychain.read(valueForKey: OAuth2TokenType.access.rawValue) else
+        { return PJCURLRequestHeaders() }
+        
         let auth = PJCURLRequestAuthorization(scheme: .bearer,
-                                              token: OAuth2.token) // TODO:Read token from keychain ...
+                                              token: token)
         
         return  PJCURLRequestHeaders(authorization: auth)
     }

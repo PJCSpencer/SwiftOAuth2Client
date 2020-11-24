@@ -162,7 +162,10 @@ struct OAuth2TokenResponse: Codable
 extension OAuth2TokenResponse: PJCKeychainSupporter
 {
     func saveToKeychain()
-    { self.accessToken.saveToKeychain() }
+    {
+        self.accessToken.saveToKeychain()
+        // self.refreshToken?.saveToKeychain()
+    }
 }
 
 struct OAuth2RefreshParameters

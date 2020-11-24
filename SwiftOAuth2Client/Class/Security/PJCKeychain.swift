@@ -20,5 +20,10 @@ class PJCKeychain
     {
         OAuth2.token = value // TODO:Write value to keychain ...
     }
+    
+    class func read(valueForKey key: String) -> String?
+    {
+        return OAuth2.token // TODO:Read value from keychain ...
+    }
 }
 

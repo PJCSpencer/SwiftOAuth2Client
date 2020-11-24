@@ -105,10 +105,10 @@ struct OAuth2Token: Codable
 
 extension OAuth2Token: PJCKeychainSupporter
 {
-    func saveToKeychain() // TODO:Support protocol ...
+    func saveToKeychain()
     {
         PJCKeychain.write(value: self.value,
-                          forKey: OAuth2TokenType.access.rawValue)
+                          forKey: self.type.rawValue)
     }
 }
 

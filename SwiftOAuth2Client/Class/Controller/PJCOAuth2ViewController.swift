@@ -73,7 +73,7 @@ extension PJCOAuth2ViewController
         let request = GmailServiceRequest<GmailLabelCollection>(GmailParameters(email),
                                                                 provider: GmailLabels.list)
         
-        PJCGmailService.shared.request(request)
+        GmailService.shared.request(request)
         { (result) in
             
             if let collection = try? result.get()

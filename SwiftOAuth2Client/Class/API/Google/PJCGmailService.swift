@@ -14,11 +14,11 @@ protocol GmailServiceDelegate
                     completion: @escaping RESTServiceResponseHandler<T>)
 }
 
-class PJCGmailService
+class GmailService
 {
     // MARK: - Accessing the Shared Instance
     
-    static let shared: PJCGmailService = PJCGmailService()
+    static let shared: GmailService = GmailService()
     
     
     // MARK: - Property(s)
@@ -30,7 +30,7 @@ class PJCGmailService
     
     private init()
     {
-        let configuration = URLSessionConfiguration.named("com.SwiftOAuth2Client.PJCGmailService.cache")
+        let configuration = URLSessionConfiguration.named("com.SwiftOAuth2Client.GmailService.cache")
         let session = URLSession(configuration: configuration)
         let service = PJCDataService(session: session)
         
@@ -38,7 +38,7 @@ class PJCGmailService
     }
 }
 
-extension PJCGmailService: GmailServiceDelegate
+extension GmailService: GmailServiceDelegate
 {
     func request<T>(_ request: GmailServiceRequest<T>,
                     completion: @escaping RESTServiceResponseHandler<T>)
