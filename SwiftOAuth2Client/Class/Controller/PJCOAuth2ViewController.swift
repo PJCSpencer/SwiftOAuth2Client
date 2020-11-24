@@ -22,7 +22,7 @@ class PJCOAuth2ViewController: UIViewController
     {
         super.viewDidAppear(animated)
         
-        self.threeLeggedExample(callAPIs: false)
+        self.threeLeggedExample(callAPIs: true)
         // self.twoLeggedExample()
     }
 }
@@ -42,10 +42,10 @@ extension PJCOAuth2ViewController
         
         if callAPIs
         {
-            OAuth2Controller.shared.completion = { [weak self] (_) in self?.callAPIs() }
+            OAuth2Controller.shared.completion = { (_) in PJCGmailLabelsViewModel.reload() }
             OAuth2.authenticationRoute = .threeLegged(parameters)
         
-            self.callAPIs()
+            PJCGmailLabelsViewModel.reload()
         }
         else
         {
@@ -60,25 +60,6 @@ extension PJCOAuth2ViewController
         
         OAuth2Controller.shared.completion = { (result) in print(result) }
         OAuth2Controller.shared.exchange(grant: .clientCredentials(credentials))
-    }
-}
-
-extension PJCOAuth2ViewController
-{
-    func callAPIs()
-    {
-        guard let email = PJCEmailAddress("<paste gmail here>") else
-        { return }
-        
-        let request = GmailServiceRequest<GmailLabelCollection>(GmailParameters(email),
-                                                                provider: GmailLabels.list)
-        
-        GmailService.shared.request(request)
-        { (result) in
-            
-            if let collection = try? result.get()
-            { collection.labels.forEach({ print($0.name )}) }
-        }
     }
 }
 

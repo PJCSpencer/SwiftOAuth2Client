@@ -43,6 +43,7 @@
 		C2E848E52566AA3E00E35CC9 /* PJCDataServiceConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E848E42566AA3E00E35CC9 /* PJCDataServiceConsumer.swift */; };
 		C2E848ED2566AC4B00E35CC9 /* PJCOAuth2ConsumerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E848EC2566AC4B00E35CC9 /* PJCOAuth2ConsumerRouter.swift */; };
 		C2E848FC2566D8F800E35CC9 /* PJCJSONConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E848FB2566D8F800E35CC9 /* PJCJSONConsumer.swift */; };
+		C2F2BD22256D31D60083FD13 /* PJCGmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F2BD21256D31D60083FD13 /* PJCGmailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +106,7 @@
 		C2E848E42566AA3E00E35CC9 /* PJCDataServiceConsumer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PJCDataServiceConsumer.swift; sourceTree = "<group>"; };
 		C2E848EC2566AC4B00E35CC9 /* PJCOAuth2ConsumerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJCOAuth2ConsumerRouter.swift; sourceTree = "<group>"; };
 		C2E848FB2566D8F800E35CC9 /* PJCJSONConsumer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJCJSONConsumer.swift; sourceTree = "<group>"; };
+		C2F2BD21256D31D60083FD13 /* PJCGmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJCGmailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +141,7 @@
 				C250AFD6256BDAD000E7FE3C /* PJCGmailService+Additions.swift */,
 				C250AFC3256BD16100E7FE3C /* PJCGmailServiceEndpoint.swift */,
 				C250AFF7256C587300E7FE3C /* PJCGmailModel.swift */,
+				C2F2BD21256D31D60083FD13 /* PJCGmailViewModel.swift */,
 			);
 			path = Google;
 			sourceTree = "<group>";
@@ -419,6 +422,7 @@
 				C29303DC254C353500708DB3 /* UIKit+Additions.swift in Sources */,
 				C29303D3254C350100708DB3 /* PJCDataService+Additions.swift in Sources */,
 				C215D38125598CE3004F3A77 /* PJCOAuth2ConsentService+Additions.swift in Sources */,
+				C2F2BD22256D31D60083FD13 /* PJCGmailViewModel.swift in Sources */,
 				C29303D1254C350100708DB3 /* PJCDataService.swift in Sources */,
 				C250AFF8256C587300E7FE3C /* PJCGmailModel.swift in Sources */,
 				C293043F254C576200708DB3 /* PJCOAuth2Service.swift in Sources */,
