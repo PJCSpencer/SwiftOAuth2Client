@@ -75,6 +75,8 @@ enum PJCDataServiceError: Error
         case .redirection: return 300
         case .badRequest: return 400
         case .unauthorized: return 401
+        case .forbidden: return 403
+        case .notFound: return 404
         case .requestTimeout: return 408
         case .imATeapot: return 418
         case .cancelled: return 499
@@ -152,6 +154,7 @@ enum HTTPMethod: String
 {
     case get        = "GET"
     case post       = "POST"
+    case put        = "PUT"
     case delete     = "DELETE"
 }
 

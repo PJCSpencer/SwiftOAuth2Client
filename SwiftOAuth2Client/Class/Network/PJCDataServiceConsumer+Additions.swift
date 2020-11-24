@@ -60,11 +60,3 @@ extension PJCConsumerJSONRouter: PJCConsumerRouter
     }
 }
 
-class PJCErrorConsumerRouters // TODO:
-{
-    static func all<T>(with completion: @escaping PJCDataServiceConsumerHandler<T>) -> [PJCConsumerRouter]
-    {
-        return []
-    }
-}
-

@@ -12,9 +12,9 @@ protocol HTTPHost
 {
     var scheme: HTTPScheme { get }
     
-    var name: String { get }
+    var name: String { get } // TODO:Support DomainName ..?
     
-    var address: String? { get }
+    var address: String? { get } // TODO:Support IPAddress ..?
 }
 
 extension HTTPHost

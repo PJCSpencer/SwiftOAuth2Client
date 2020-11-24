@@ -22,7 +22,7 @@ class PJCOAuth2ViewController: UIViewController
     {
         super.viewDidAppear(animated)
         
-        self.threeLeggedExample(callAPIs: true)
+        self.threeLeggedExample(callAPIs: false)
         // self.twoLeggedExample()
     }
 }
@@ -42,9 +42,7 @@ extension PJCOAuth2ViewController
         
         if callAPIs
         {
-            OAuth2Controller.shared.completion = { (_) in PJCGmailLabelsViewModel.reload() }
             OAuth2.authenticationRoute = .threeLegged(parameters)
-        
             PJCGmailLabelsViewModel.reload()
         }
         else

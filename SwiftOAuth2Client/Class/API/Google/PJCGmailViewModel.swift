@@ -17,6 +17,8 @@ extension PJCGmailLabelsViewModel
         guard let email = PJCEmailAddress("<paste gmail here>") else
         { return }
         
+        OAuth2Controller.shared.completion = { (_) in Self.reload() }
+        
         let request = GmailServiceRequest<GmailLabelCollection>(GmailParameters(email),
                                                                 provider: GmailLabels.list)
         
