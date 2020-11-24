@@ -14,25 +14,21 @@ enum OAuth2Route
     case threeLegged(OAuth2ConsentParameters)
 }
 
-class OAuth2ConsumerRouter<T>
+class OAuth2ConsumerRouter<T> // NB:Small compromise for convenience.
 {
     // MARK: - Property(s)
     
     private(set) var route: OAuth2Route
     
-    fileprivate var completion: PJCDataServiceConsumerHandler<T>
-    
     
     // MARK: - Initialisation
     
-    init?(_ route: OAuth2Route? = OAuth2.authenticationRoute,
-          completion: @escaping PJCDataServiceConsumerHandler<T>)
+    init?(_ route: OAuth2Route? = OAuth2.authenticationRoute)
     {
         guard let route = route else
         { return nil }
         
         self.route = route
-        self.completion = completion
     }
 }
 
@@ -44,11 +40,11 @@ extension OAuth2ConsumerRouter: PJCConsumerRouter
         {
         case .twoLegged(let credentials):
             DispatchQueue.main.async()
-            { PJCOAuth2Controller.shared.exchange(grant: .clientCredentials(credentials)) }
+            { OAuth2Controller.shared.exchange(grant: .clientCredentials(credentials)) }
             
         case .threeLegged(let parameters):
             DispatchQueue.main.async()
-            { PJCOAuth2Controller.shared.authorize(parameters: parameters) }
+            { OAuth2Controller.shared.authorize(parameters: parameters) }
         }
     }
 }

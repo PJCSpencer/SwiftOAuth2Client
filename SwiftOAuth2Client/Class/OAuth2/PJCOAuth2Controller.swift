@@ -8,11 +8,15 @@
 import Foundation
 
 
-final class PJCOAuth2Controller
+typealias OAuth2ControllerResult = Result<OAuth2Token, Error>
+
+typealias OAuth2ControllerResponseHandler = (OAuth2ControllerResult) -> Void
+
+final class OAuth2Controller
 {
     // MARK: - Accessing the Shared Instance
     
-    static let shared: PJCOAuth2Controller = PJCOAuth2Controller()
+    static let shared: OAuth2Controller = OAuth2Controller()
     
     
     // MARK: - Property(s)
@@ -23,7 +27,7 @@ final class PJCOAuth2Controller
     
     var automaticallyRefreshAccessToken: Bool = false
     
-    var completion: OAuth2TokenServiceResponseHandler?
+    var completion: OAuth2ControllerResponseHandler?
     
     
     // MARK: - Initialisation
@@ -31,7 +35,7 @@ final class PJCOAuth2Controller
     private init() {}
 }
 
-extension PJCOAuth2Controller
+extension OAuth2Controller
 {
     // MARK: - Authorizing Consent Parameters
     
@@ -61,23 +65,22 @@ extension PJCOAuth2Controller
             switch result
             {
             case .success(let response):
-                // print("Access token: \(response.accessToken)")
-                
                 if self.automaticallyRefreshAccessToken,
                    let parameters: OAuth2AuthorizationParameters = grant.get(),
                    let credentials = parameters.credentials as OAuth2AuthorizationCredentials?,
                    let token = response.refreshToken
                 {
-                    // print("\nAttempting to exchange refresh token")
                     let parameters = OAuth2RefreshParameters(credentials,
                                                              token: token)
                     self.exchange(grant: .refreshToken(parameters))
                 }
                 else
-                { self.completion?(.success(response)) }
+                {
+                    response.saveToKeychain()
+                    self.completion?(.success(response.accessToken))
+                }
                 
             case .failure(_):
-                // print("There was a error: \(error)")
                 self.completion?(.failure(OAuth2Error.failed))
             }
         }

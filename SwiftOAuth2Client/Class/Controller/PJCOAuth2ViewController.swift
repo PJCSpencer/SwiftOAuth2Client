@@ -42,15 +42,15 @@ extension PJCOAuth2ViewController
         
         if callAPIs
         {
+            OAuth2Controller.shared.completion = { [weak self] (_) in self?.callAPIs() }
             OAuth2.authenticationRoute = .threeLegged(parameters)
-            PJCOAuth2Controller.shared.completion = self.retry
         
             self.callAPIs()
         }
         else
         {
-            PJCOAuth2Controller.shared.completion = { (result) in print(result) }
-            PJCOAuth2Controller.shared.authorize(parameters: parameters)
+            OAuth2Controller.shared.completion = { (result) in print(result) }
+            OAuth2Controller.shared.authorize(parameters: parameters)
         }
     }
     
@@ -58,8 +58,8 @@ extension PJCOAuth2ViewController
     {
         let credentials = UIApplication.shared.clientCredentials
         
-        PJCOAuth2Controller.shared.completion = { (result) in print(result) }
-        PJCOAuth2Controller.shared.exchange(grant: .clientCredentials(credentials))
+        OAuth2Controller.shared.completion = { (result) in print(result) }
+        OAuth2Controller.shared.exchange(grant: .clientCredentials(credentials))
     }
 }
 
@@ -79,16 +79,6 @@ extension PJCOAuth2ViewController
             if let collection = try? result.get()
             { collection.labels.forEach({ print($0.name )}) }
         }
-    }
-    
-    func retry(_ result: Result<OAuth2TokenResponse, Error>)
-    {
-        guard let response = try? result.get() else
-        { return }
-        
-        response.saveToKeychain()
-        
-        self.callAPIs()
     }
 }
 

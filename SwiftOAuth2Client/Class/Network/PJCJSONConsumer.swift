@@ -17,7 +17,7 @@ final class PJCJSONConsumer: PJCDataServiceConsumer
     {
         self.routers[PJCDataServiceError.success.statusCode] = PJCConsumerJSONRouter(completion)
         self.routers[PJCDataServiceError.imATeapot.statusCode] = PJCConsumerErrorRouter(completion)
-        self.routers[PJCDataServiceError.unauthorized.statusCode] = OAuth2ConsumerRouter(completion: completion)
+        self.routers[PJCDataServiceError.unauthorized.statusCode] = OAuth2ConsumerRouter<T>()
         
         super.resume(with: request,
                      completion: completion)
