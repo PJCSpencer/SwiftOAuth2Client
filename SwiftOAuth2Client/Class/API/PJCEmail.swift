@@ -36,7 +36,7 @@ struct PJCDomainName
     }
 }
 
-struct PJCEmailAddress
+struct PJCEmailAddress // TODO:Expand, support regex validation ...
 {
     // MARK: - Property(s)
     

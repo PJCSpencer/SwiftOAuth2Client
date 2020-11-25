@@ -25,6 +25,8 @@ class GmailService
     
     var consumer: PJCDataServiceConsumer
     
+    var oauth2Controller: OAuth2Controller? = OAuth2Controller.shared
+    
     
     // MARK: - Initialisation
     
@@ -49,7 +51,7 @@ extension GmailService: GmailServiceDelegate
             return
         }
         
-        OAuth2Controller.shared.completion =
+        self.oauth2Controller?.completion =
         { [weak self] (_) in self?.request(request, completion: completion) }
         
         self.consumer.resume(with: urlRequest,
