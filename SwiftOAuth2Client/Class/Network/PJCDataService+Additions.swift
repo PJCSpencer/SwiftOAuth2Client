@@ -48,7 +48,7 @@ protocol PJCURLRequestContentBodyProvider
 
 enum PJCDataServiceError: Error
 {
-    case none, failed, unkown, noHost, badResponse, unkownData
+    case none, failed, unknown, noHost, badResponse, unkownData
     
     // 200.
     case success

@@ -25,7 +25,7 @@ extension PJCConsumerErrorRouter: PJCConsumerRouter
 {
     func route(_ result: PJCDataTaskResult)
     {
-        var error: Error = PJCDataServiceError.unkown
+        var error: Error = PJCDataServiceError.unknown
             
         switch result
         {
