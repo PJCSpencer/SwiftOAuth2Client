@@ -43,16 +43,7 @@ extension GmailService: GmailServiceDelegate
     func request<T>(_ request: GmailServiceRequest<T>,
                     completion: @escaping RESTServiceResponseHandler<T>)
     {
-        guard let resource = request.resource else
-        { return }
-        
-        let apiRequest = PJCAPIRequest(GoogleGmail(),
-                                       path: resource.path)
-        
-        let parameters = PJCURLRequestParameters(resource.method,
-                                                 headers: request.headers)
-        
-        guard let urlRequest = apiRequest.urlRequest(parameters: parameters) else
+        guard let urlRequest = request.urlRequest() else
         {
             completion(.failure(PJCDataServiceError.badRequest))
             return

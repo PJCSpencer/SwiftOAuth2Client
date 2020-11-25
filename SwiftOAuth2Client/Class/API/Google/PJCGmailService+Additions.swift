@@ -86,3 +86,20 @@ extension GmailServiceRequest: PJCURLRequestHeaderProvider
     }
 }
 
+extension GmailServiceRequest: PJCURLRequestProvider
+{
+    func urlRequest(parameters: PJCURLRequestParameters? = nil) -> URLRequest?
+    {
+        guard let resource = self.resource else
+        { return nil }
+        
+        let apiRequest = PJCAPIRequest(GoogleGmail(),
+                                       path: resource.path)
+        
+        let parameters = PJCURLRequestParameters(resource.method,
+                                                 headers: self.headers)
+        
+        return apiRequest.urlRequest(parameters: parameters)
+    }
+}
+
