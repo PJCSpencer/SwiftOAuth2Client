@@ -31,14 +31,12 @@ extension PJCOAuth2ViewController
 {
     func threeLeggedExample(callAPIs: Bool)
     {
-        guard let verifier = PJCCodeVerifier() else
-        { return }
-        
         let credentials = UIApplication.shared.authorizationCredentials
         let scopes = UIApplication.shared.scopes
-        let parameters = OAuth2ConsentParameters(credentials,
-                                                 verifier: verifier,
-                                                 scopes: scopes)
+        
+        guard let parameters = OAuth2ConsentParameters(credentials,
+                                                       scopes: scopes) else
+        { return }
         
         if callAPIs
         {

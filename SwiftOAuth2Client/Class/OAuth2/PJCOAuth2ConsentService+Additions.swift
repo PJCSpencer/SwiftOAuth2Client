@@ -16,7 +16,7 @@ struct OAuth2ConsentParameters
     
     let responseType: String = OAuth2AuthorizationKey.code.rawValue
     
-    let scopes: String // TODO:Support tiny domain type ...
+    let scopes: String // TODO:Support tiny domain type ..?
     
     let verifier: PJCCodeVerifier
     
@@ -25,10 +25,12 @@ struct OAuth2ConsentParameters
     
     // MARK: - Initailisation
     
-    init(_ credentials: OAuth2AuthorizationCredentials,
-         verifier: PJCCodeVerifier,
-         scopes: [String])
+    init?(_ credentials: OAuth2AuthorizationCredentials,
+          scopes: [String])
     {
+        guard let verifier = PJCCodeVerifier() else
+        { return nil }
+        
         self.credentials = credentials
         self.verifier = verifier
         self.scopes = String(scopes.map({ $0 + " " }).reduce("", +).dropLast())
