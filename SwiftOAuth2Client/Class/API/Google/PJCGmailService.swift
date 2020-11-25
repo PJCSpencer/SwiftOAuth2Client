@@ -49,6 +49,9 @@ extension GmailService: GmailServiceDelegate
             return
         }
         
+        OAuth2Controller.shared.completion =
+        { [weak self] (_) in self?.request(request, completion: completion) }
+        
         self.consumer.resume(with: urlRequest,
                              completion: completion)
     }
