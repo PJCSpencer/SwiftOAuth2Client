@@ -1,5 +1,5 @@
 # SwiftOAuth2Client
-Swift based general purpose OAuth2 client application for iOS
+General purpose Swift based OAuth2 client application for iOS
 
 ## Two legged example using Twitter
 Here's the guide which was used: \
