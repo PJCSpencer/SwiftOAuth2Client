@@ -38,7 +38,7 @@ var tokenHost: OAuth2Host? { return nil) }
 ```
 > Switch the comments for the two legged example in PJCOAuth2ViewController.swift
 ```swift		   
-// self.threeLeggedExample()
+// self.threeLeggedExample(callAPIs: false)
 self.twoLeggedExample()
 ```
 ## Three legged example using Google 
@@ -77,7 +77,7 @@ var tokenHost: OAuth2Host? { return GoogleOAuth2() }
 ```
 > Switch the comments for the three legged example in PJCOAuth2ViewController.swift
 ```swift		   
-self.threeLeggedExample()
+self.threeLeggedExample(callAPIs: false)
 // self.twoLeggedExample()
 ```
 ## Three legged example using Spotify
