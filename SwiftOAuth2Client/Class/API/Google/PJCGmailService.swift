@@ -23,21 +23,9 @@ class GmailService
     
     // MARK: - Property(s)
     
-    var consumer: PJCDataServiceConsumer
+    var consumer: PJCDataConsumer = PJCJSONConsumer(provider: PJCDataService())
     
     var oauth2Controller: OAuth2Controller? = OAuth2Controller.shared
-    
-    
-    // MARK: - Initialisation
-    
-    private init()
-    {
-        let configuration = URLSessionConfiguration.named("com.SwiftOAuth2Client.GmailService.cache")
-        let session = URLSession(configuration: configuration)
-        let service = PJCDataService(session: session)
-        
-        self.consumer = PJCJSONConsumer(service)
-    }
 }
 
 extension GmailService: GmailServiceDelegate

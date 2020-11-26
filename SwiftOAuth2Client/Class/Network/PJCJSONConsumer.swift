@@ -8,7 +8,7 @@
 import Foundation
 
 
-final class PJCJSONConsumer: PJCDataServiceConsumer
+final class PJCJSONConsumer: PJCDataConsumer
 {
     // MARK: - Resuming a Task
     

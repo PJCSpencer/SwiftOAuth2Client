@@ -22,7 +22,7 @@ class PJCOAuth2ViewController: UIViewController
     {
         super.viewDidAppear(animated)
         
-        self.threeLeggedExample(callAPIs: true)
+        self.threeLeggedExample(callAPIs: false)
         // self.twoLeggedExample()
     }
 }

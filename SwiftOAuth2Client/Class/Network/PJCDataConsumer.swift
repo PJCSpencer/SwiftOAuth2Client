@@ -15,7 +15,7 @@ protocol PJCConsumerRouter
     func route(_ result: PJCDataTaskResult)
 }
 
-class PJCDataServiceConsumer: PJCDataTaskResponseHandlerDelegate
+class PJCDataConsumer: PJCDataTaskResponseHandlerDelegate
 {
     // MARK: - Property(s)
     
@@ -38,7 +38,7 @@ class PJCDataServiceConsumer: PJCDataTaskResponseHandlerDelegate
     
     // MARK: - Initialisation
     
-    init(_ provider: PJCDataTaskProvider)
+    init(provider: PJCDataTaskProvider)
     { self.provider = provider }
     
     deinit
