@@ -1,6 +1,10 @@
 # SwiftOAuth2Client
 General purpose Swift based OAuth2 client application for iOS
 
+<p align="center">
+  <img src="https://github.com/PJCSpencer/SwiftOAuth2Client/blob/main/Skeleton.png" alt="Skeleton"/>
+</p>
+
 ## Two legged example using Twitter
 Here's the guide which was used: \
 https://developer.twitter.com/en/docs/authentication/oauth-2-0/bearer-tokens
