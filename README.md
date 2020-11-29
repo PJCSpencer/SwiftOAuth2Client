@@ -1,3 +1,10 @@
+# SwiftOAuth2Client
+General purpose Swift based OAuth2 client application for iOS
+
+<p align="center">
+  <img src="https://github.com/PJCSpencer/SwiftOAuth2Client/blob/main/Skeleton.png" alt="Skeleton"/>
+</p>
+
 ## Two legged example using Twitter
 Here's the guide which was used: \
 https://developer.twitter.com/en/docs/authentication/oauth-2-0/bearer-tokens
@@ -35,7 +42,7 @@ var tokenHost: OAuth2Host? { return nil) }
 ```
 > Switch the comments for the two legged example in PJCOAuth2ViewController.swift
 ```swift		   
-// self.threeLeggedExample()
+// self.threeLeggedExample(callAPIs: false)
 self.twoLeggedExample()
 ```
 ## Three legged example using Google 
@@ -74,7 +81,7 @@ var tokenHost: OAuth2Host? { return GoogleOAuth2() }
 ```
 > Switch the comments for the three legged example in PJCOAuth2ViewController.swift
 ```swift		   
-self.threeLeggedExample()
+self.threeLeggedExample(callAPIs: false)
 // self.twoLeggedExample()
 ```
 ## Three legged example using Spotify
