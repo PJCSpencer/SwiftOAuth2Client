@@ -10,7 +10,7 @@ import Foundation
 
 typealias PJCDataTaskResult = Result<PJCTaskData, Error>
 
-typealias PJCDataTaskResponseHandler = (PJCDataTaskResult) -> Void
+typealias PJCDataTaskResponseHandler = (_ result: PJCDataTaskResult) -> Void
 
 typealias PJCDataTaskResponseHandlerProvider = (_ statusCode: Int) -> PJCDataTaskResponseHandler?
 
@@ -72,10 +72,6 @@ class PJCDataService
 
 extension PJCDataService: PJCDataTaskProvider // TODO:Task could be baked in to the returned escaping function which takes a completion handler ..?
 {
-    typealias PJCTaskResponseHandler = (Result<Any, Error>) -> Void
-    
-    typealias PJCTaskResponseCompletionHandler = () -> Void
-    
     func task(for request: URLRequest,
               responseHandler: @escaping PJCDataTaskResponseHandlerProvider) -> URLSessionTask
     {

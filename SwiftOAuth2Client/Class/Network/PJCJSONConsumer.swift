@@ -13,7 +13,7 @@ final class PJCJSONConsumer: PJCDataConsumer
     // MARK: - Resuming a Task
     
     override func resume<T:Codable>(with request: URLRequest,
-                                    completion: @escaping PJCDataServiceConsumerHandler<T>)
+                                    completion: @escaping PJCDataConsumerHandler<T>)
     {
         self.routers[PJCDataServiceError.success.statusCode] = PJCConsumerJSONRouter(completion)
         self.routers[PJCDataServiceError.imATeapot.statusCode] = PJCConsumerErrorRouter(completion)

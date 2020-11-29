@@ -8,7 +8,9 @@
 import Foundation
 
 
-typealias PJCDataServiceConsumerHandler<T> = (Result<T, Error>) -> Void
+typealias PJCDataConsumerResult<T> = Result<T, Error>
+
+typealias PJCDataConsumerHandler<T> = (PJCDataConsumerResult<T>) -> Void
 
 protocol PJCConsumerRouter
 {
@@ -48,7 +50,7 @@ class PJCDataConsumer: PJCDataTaskResponseHandlerDelegate
     // MARK: - Controlling a Task
     
     func resume<T:Codable>(with request: URLRequest,
-                           completion: @escaping PJCDataServiceConsumerHandler<T>)
+                           completion: @escaping PJCDataConsumerHandler<T>)
     {
         self.task = self.provider.task(for: request,
                                        responseHandler: self.responseHandler)

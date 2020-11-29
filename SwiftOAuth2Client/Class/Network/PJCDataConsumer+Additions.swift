@@ -12,12 +12,12 @@ class PJCConsumerErrorRouter<T>
 {
     // MARK: - Property(s)
     
-    fileprivate var completion: PJCDataServiceConsumerHandler<T>
+    fileprivate var completion: PJCDataConsumerHandler<T>
     
     
     // MARK: - Initialisation
     
-    init(_ completion: @escaping PJCDataServiceConsumerHandler<T>)
+    init(_ completion: @escaping PJCDataConsumerHandler<T>)
     { self.completion = completion }
 }
 
@@ -42,12 +42,12 @@ class PJCConsumerJSONRouter<T:Codable>
 {
     // MARK: - Property(s)
     
-    fileprivate var completion: PJCDataServiceConsumerHandler<T>
+    fileprivate var completion: PJCDataConsumerHandler<T>
     
     
     // MARK: - Initialisation
     
-    init(_ completion: @escaping PJCDataServiceConsumerHandler<T>)
+    init(_ completion: @escaping PJCDataConsumerHandler<T>)
     { self.completion = completion }
 }
 
